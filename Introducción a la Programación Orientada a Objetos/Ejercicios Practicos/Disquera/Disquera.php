@@ -6,7 +6,7 @@ private $hora_desde;
 private $hora_hasta;
 private $estado;
 private $direccion;
-private $objDueño; //El atributo dueño debe referenciar a uno bjeto de la clase Persona
+private $objDueño; //El atributo dueño debe referenciar a uno objeto de la clase Persona
 
 //constructor
 public function __construct($hora_desde, $hora_hasta, $estado, $direccion, $objDueño){
@@ -60,10 +60,13 @@ public function __toString(){
 }
        
 
-//c) dentroHorarioAtencion($hora, $minutos): que dada una hora y minutos retorna true si la tienda
+//c) dentroHorarioAtencion($hora, $minutos): Que dada una hora y minutos retorna true si la tienda
 //   debe encontrarse abierta en ese horario y false en caso contrario
 public function dentroHorarioAtencion($hora, $minutos){
- 
+    $open = false;
+    if ($this->getHora_desde()<$hora && $hora <$this->getHora_hasta()) {
+                                              
+    }
 }
 
 
