@@ -44,10 +44,13 @@ public function setNroDni($nroDni){
 
 //metodo Tostring
 public function __toString(){
-    return "  Nombre: ". $this->getNombre()."\n".
+    return  
+            "  Nombre: ". $this->getNombre()."\n".
             "  Apellido: ".$this->getApellido().",\n".
             "  Nro Dni: ".$this->getNroDni()."\n";
 }
+
+
 
 }
 ?>
