@@ -3,7 +3,6 @@
 class CajaDeAhorro extends Cuenta
 {
 
-
     //contructor
     public function __construct($numCuenta, $saldoActual, $objDueño)
     {

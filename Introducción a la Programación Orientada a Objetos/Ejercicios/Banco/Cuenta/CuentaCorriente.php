@@ -5,7 +5,7 @@ class CuentaCorriente extends Cuenta{
 
     //atributos propios de la cuenta corriente
     private $montoMaxGiro;
-
+    
     
     //constructor
     public function __construct($numCuenta, $saldoActual, $objDueño, $montoMaxGiro )
