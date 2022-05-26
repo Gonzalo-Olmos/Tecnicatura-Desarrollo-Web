@@ -151,7 +151,6 @@ class Banco
      */
     public function incorporarCliente($objCliente)
     {
-
         $coleccionClientes = $this->getColeccionCliente();
         $coleccionClientes[] = $objCliente;
 
@@ -251,21 +250,85 @@ class Banco
      * Metodo que Dado un número de Cuenta y un monto, realizar depósito.
      * @param int $numCuenta  suponemos que el numCuenta es Clave primaria de Cuenta
      * @param float $monto
+     * @return boolean si se pudo depositar o no
      */
-    public function realizarDeposito($numCuenta, $monto){
-        
-                
+    public function realizarDeposito($numCuenta, $monto)
+    {
+        $sePudoDepositar = false;
+
+        $coleccionCuentaCorriente = $this->getColeccionCuentaCorriente();
+        $coleccionCuentaAhorro = $this->getColeccionCajaAhorro();
+
+        //busco el numero de cuenta
+        $position = $this->buscarCuentaCorriente($numCuenta);
+        if ($position != -1) {
+            #deposito en la cuenta corriente
+            $saldoActual = $coleccionCuentaCorriente[$position];
+            $coleccionCuentaCorriente[$position]->setSaldoActual($monto + $saldoActual);;
+            $this->setColeccionCuentaCorriente($coleccionCuentaCorriente);
+            $sePudoDepositar = true;
+        }else {
+            $position = $this->buscarCuentaAhorro($numCuenta);
+            if ($position != -1) {
+                # deposito en la cuenta de caja de ahorro
+                $saldoActual = $coleccionCuentaAhorro[$position];
+                $coleccionCuentaAhorro[$position]->setSaldoActual($monto + $saldoActual);;
+                $this->setColeccionCajaAhorro($coleccionCuentaAhorro);
+                $sePudoDepositar=true;
+            }
+        }
+        return $sePudoDepositar;
     }
 
 
-    
-    static function buscarCuenta($numCuenta){
-        
-        //obtengo las dos colecciones
+    /**
+     * Metodo que busca un numero de cuena en la coleccion de cuentas corrientes
+     * @return int retorna la posicion del arreglo que tenga el mismo numero de cuenta
+     */
+    function buscarCuentaCorriente($numCuenta)
+    {
+        $i = 0;
+        $seEncontro = false;
+        $position = -1;
+        //obtengo la coleccion
+        $coleccionCuentaCorriente = $this->getColeccionCuentaCorriente();
 
+        //recorrido do while hasta encontrar el numero de cuenta
+        do {
+            $numeroCuenta = $coleccionCuentaCorriente[$i];
+            if ($numCuenta == $numeroCuenta) {
+                $seEncontro = true;
+                $position = $i;
+            }
+            $i++;
+        } while (!$seEncontro && $i < count($coleccionCuentaCorriente));
+
+        return $position;
     }
 
+    /**
+     * Metodo que busca un numero de cuena en la coleccion de cuentas de caja de ahorro
+     * @return int retorna la posicion del arreglo que tenga el mismo numero de cuenta
+     */
+    function buscarCuentaAhorro($numCuenta)
+    {
+        $i = 0;
+        $seEncontro = false;
+        $position = -1;
 
+        //obtengo la coleccion
+        $coleccionCuentaAhorro = $this->getColeccionCajaAhorro();
 
+        //recorrido do while hasta encontrar el numero de cuenta
+        do {
+            $numeroCuenta = $coleccionCuentaAhorro[$i];
+            if ($numCuenta == $numeroCuenta) {
+                $seEncontro = true;
+                $position = $i;
+            }
+            $i++;
+        } while (!$seEncontro && $i < count($coleccionCuentaAhorro));
 
+        return $position;
+    }
 }
