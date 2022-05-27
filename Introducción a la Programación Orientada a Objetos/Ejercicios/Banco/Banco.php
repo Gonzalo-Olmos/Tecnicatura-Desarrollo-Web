@@ -331,4 +331,42 @@ class Banco
 
         return $position;
     }
+
+    /**
+     * Metodo que Dado un número de Cuenta y un monto, realiza un retiro.
+     * @param int $numCuenta  suponemos que el numCuenta es Clave primaria de Cuenta
+     * @param float $monto
+     * @return boolean si se pudo retirar o no
+     */
+    public function realizarRetiro($numCuenta, $monto)
+    {
+        $sePudoRetirar = false;
+
+        $coleccionCuentaCorriente = $this->getColeccionCuentaCorriente();
+        $coleccionCuentaAhorro = $this->getColeccionCajaAhorro();
+
+        //busco el numero de cuenta
+        $position = $this->buscarCuentaCorriente($numCuenta);
+        if ($position != -1) {
+            #retiro en la cuenta corriente
+            $saldoActual = $coleccionCuentaCorriente[$position];
+            $coleccionCuentaCorriente[$position]->setSaldoActual($saldoActual - $monto);
+            $this->setColeccionCuentaCorriente($coleccionCuentaCorriente);
+            $sePudoRetirar = true;
+
+        }else{
+            $position = $this->buscarCuentaAhorro($numCuenta);
+            if ($position != -1) {
+                # retiro en la cuenta de caja de ahorro
+                $saldoActual = $coleccionCuentaAhorro[$position];
+                $coleccionCuentaAhorro[$position]->setSaldoActual($saldoActual - $monto);
+                $this->setColeccionCajaAhorro($coleccionCuentaAhorro);
+                $sePudoRetirar=true;
+            }
+        }
+        return $sePudoRetirar;
+    }
+
+
+
 }

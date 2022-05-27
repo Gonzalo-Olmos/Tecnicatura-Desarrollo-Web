@@ -8,7 +8,7 @@ class CuentaCorriente extends Cuenta{
     
     
     //constructor
-    public function __construct($numCuenta, $saldoActual, $objDueño, $montoMaxGiro )
+    public function __construct($numCuenta, $saldoActual, $objDueño, $montoMaxGiro)
     {
         //invocamos al contructor de Cuenta
         parent::__construct($numCuenta, $saldoActual, $objDueño);
