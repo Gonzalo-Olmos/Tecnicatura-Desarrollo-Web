@@ -1,4 +1,9 @@
 <?php
+include_once("Banco.php");
+include_once("Cliente.php");
+include_once("CajaDeAhorro.php");
+include_once("CuentaCorriente.php");
+
 
 //creacion de clientes
 $objCliente1= new Cliente("Gonzalo", "Olmos", 41193872, 1123);
@@ -55,13 +60,30 @@ $cuentaCajaAhorroA0 = new CajaDeAhorro(3331, 300000, $nuevoCliente1A);
 $cuentaCajaAhorroA1 = new CajaDeAhorro(3332, 400000, $nuevoCliente1A);
 $cuentaCajaAhorroB0 = new CajaDeAhorro(4440, 400000, $nuevoCliente2B);
 
-//falta terminar el 4....
+$coleccionCajasDeAhorro = $objBanco->getColeccionCajaAhorro();
+$coleccionCajasDeAhorro[]= $cuentaCajaAhorroA0;
+$coleccionCajasDeAhorro[]= $cuentaCajaAhorroA1;
+$coleccionCajasDeAhorro[]= $cuentaCajaAhorroB0;
 
+//5. Depositar $300 en cada una de las Cajas de Ahorro.
+$objBanco->realizarDeposito(3331, 300);
+$objBanco->realizarDeposito(3332, 300);
+$objBanco->realizarDeposito(4440, 300);
+$objBanco->realizarDeposito(1100, 300);
+$objBanco->realizarDeposito(2200, 300);
+$objBanco->realizarDeposito(3300, 300);
+$objBanco->realizarDeposito(4400, 300);
 
+//6. Transferir $150 de la Cuenta Corriente de Cliente1, a la Caja de Ahorro de Cliente2
+$objBanco->realizarRetiro(0011, 150);
+$objBanco->realizarDeposito(4400, 150);
 
+//7. Mostrar los datos de todas las cuentas.
+echo " \n Coleccion de cuenta corriente: \n";
+print_r( $objBanco->getColeccionCuentaCorriente());
 
-
-
+echo " \n Coleccion caja de ahorro:  \n";
+print_r($objBanco->getColeccionCajaAhorro());
 
 
 

@@ -1,5 +1,5 @@
 <?php
-include "Persona.php";
+include_once("Persona.php");
 
 class Cliente extends Persona
 {

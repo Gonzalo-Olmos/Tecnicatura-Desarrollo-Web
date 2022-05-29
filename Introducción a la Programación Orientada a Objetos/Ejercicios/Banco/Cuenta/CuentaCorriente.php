@@ -1,4 +1,5 @@
 <?php
+include_once("Cuenta.php");
 
 class CuentaCorriente extends Cuenta{
 
