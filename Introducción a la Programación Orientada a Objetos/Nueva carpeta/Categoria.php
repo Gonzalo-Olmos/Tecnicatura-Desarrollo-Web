@@ -8,7 +8,7 @@ class Categoria
 
 
     //constructor
-    function __construct($idCategoria, $descripcion,)
+    function __construct($idCategoria, $descripcion)
     {
         $this->idCategoria = $idCategoria;
         $this->descripcion = $descripcion;
@@ -19,7 +19,7 @@ class Categoria
     {
         return
             "  idCategoria: " . $this->getIdCategoria() . "\n" .
-            "  descripcion: " . $this->getDescripcion() . "\n";
+            "                  descripcion: " . $this->getDescripcion() . "\n";
     }
 
     /**
