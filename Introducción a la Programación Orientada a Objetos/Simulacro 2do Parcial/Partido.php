@@ -31,11 +31,8 @@ class Partido
             "  fecha: " . $this->getFecha() . "\n" .
             "  cantGolesE1: " . $this->getCantGolesE1() . "\n". 
             "  cantGolesE2: " . $this->getCantGolesE2() . "\n". 
-            "  --- Equipo 1 --- " . $this->getObjEquipo1(). "\n". 
-            "--- --- --- ". "\n".
-            "  --- Equipo 2 --- " . $this->getObjEquipo2(). "\n". 
-            "--- --- --- ". "\n";
-
+            "  -Equipo 1 - \n" . $this->getObjEquipo1(). "\n". 
+            "  - Equipo 2 - \n" . $this->getObjEquipo2(). "\n";
     }
 
     //Setters And Getters

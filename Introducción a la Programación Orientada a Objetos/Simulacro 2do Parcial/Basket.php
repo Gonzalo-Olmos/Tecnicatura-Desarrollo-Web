@@ -1,5 +1,5 @@
 <?php
-include "Partido.php";
+
 class Basket extends Partido
 {
     //atributos propios
@@ -17,7 +17,7 @@ class Basket extends Partido
     //ToString
     function __toString()
     {
-        $cadena = "-Partido Basket- \n ";
+        $cadena = "\n----Partido Basket---- \n ";
         $cadena .= parent::__toString()." cantInfracciones: ".$this->getCantInfracciones()."\n";
         return $cadena;
     }

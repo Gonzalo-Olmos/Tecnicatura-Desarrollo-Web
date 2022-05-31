@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\elementType;
+
 class Torneo
 {
 
@@ -81,12 +84,18 @@ class Torneo
                         //crear instancia Partido y almacena en coleccion
                         if ($tipo == "basket") {
                               //Partido de Basket
-                              $partido = new Basket($OBJEquipo1, $OBJEquipo2, 0000, "2022-5-29", 20, 13, 15);
+                              $cantPartidos= count($coleccionPartidos);
+                              $idGenerado = "00".($cantPartidos +1);
+
+                              $partido = new Basket($OBJEquipo1, $OBJEquipo2, $idGenerado, $fecha, 0, 0, 0);
                               $coleccionPartidos[] = $partido;
                               $this->setColPartidos($coleccionPartidos);
                         } else {
                               //Partido de Futbol
-                              $partido = new Futbol($OBJEquipo1, $OBJEquipo2, 0000, "2022-5-29", 4, 0);
+                              $cantPartidos= count($coleccionPartidos);
+                              $idGenerado = "00".($cantPartidos +1);
+
+                              $partido = new Futbol($OBJEquipo1, $OBJEquipo2, $idGenerado, $fecha, 0, 0);
                               $coleccionPartidos[] = $partido;
                               $this->setColPartidos($coleccionPartidos);
                         }
@@ -105,7 +114,7 @@ class Torneo
       public function darGanadores($deporte)
       {
             $coleccionPartidos = $this->getColPartidos();
-            $colEquiposGanadores = [];
+            $equipoGanador = [];
             switch ($deporte) {
                   case 'basket':
                         for ($i = 0; $i < count($coleccionPartidos); $i++) {
@@ -113,9 +122,9 @@ class Torneo
                                     $cantGolesE1 = $coleccionPartidos[$i]->getCantGolesE1();
                                     $cantGolesE2 = $coleccionPartidos[$i]->getCantGolesE2();
                                     if ($cantGolesE1 > $cantGolesE2) {
-                                          $colEquiposGanadores[] = $coleccionPartidos[$i]->getObjEquipo1();
+                                          $equipoGanador[] = $coleccionPartidos[$i]->getObjEquipo1();
                                     } elseif ($cantGolesE1 < $cantGolesE2) {
-                                          $colEquiposGanadores[] = $coleccionPartidos[$i]->getObjEquipo2();
+                                          $equipoGanador[] = $coleccionPartidos[$i]->getObjEquipo2();
                                     }
                               }
                         }
@@ -128,13 +137,47 @@ class Torneo
                                     $cantGolesE1 = $coleccionPartidos[$i]->getCantGolesE1();
                                     $cantGolesE2 = $coleccionPartidos[$i]->getCantGolesE2();
                                     if ($cantGolesE1 > $cantGolesE2) {
-                                          $colEquiposGanadores[] = $coleccionPartidos[$i]->getObjEquipo1();
+                                          $equipoGanador[] = $coleccionPartidos[$i]->getObjEquipo1();
                                     } elseif ($cantGolesE1 < $cantGolesE2) {
-                                          $colEquiposGanadores[] = $coleccionPartidos[$i]->getObjEquipo2();
+                                          $equipoGanador[] = $coleccionPartidos[$i]->getObjEquipo2();
                                     }
                               }
                         }
                         break;
             }
+            return $equipoGanador;
       }
+
+      /*   Implementar el método calcularPremioPartido($coleccionPartidos) que debe retornar un arreglo asociativo
+      donde una de sus claves es ‘equipoGanador’ y contiene la referencia al equipo ganador; y la otra clave
+      es ‘premioPartido’ que contiene el valor obtenido del coeficiente del Partido por el importe configurado
+      para el torneo
+      */
+      public function calcularPremioPartido($coleccionPartidos)
+      {
+
+           // $arrayPremio[]= ["equipoGanador" => "", "premioPartido" => 0];
+
+            for ($i=0; $i < count($coleccionPartidos) ; $i++) { 
+                  //obtenemos el equipo ganador
+            $cantGolesE1 = $coleccionPartidos[$i]->getCantGolesE1();
+            $cantGolesE2 = $coleccionPartidos[$i]->getCantGolesE2();
+             //calculamos el premio partido
+             $premioPartido = $coleccionPartidos[$i]->coeficientePartido() * $this->getImporte();
+             $arrayPremio[$i]["premioPartido"]= $premioPartido ;
+            if ($cantGolesE1 > $cantGolesE2) {
+                  $equipoGanador = $coleccionPartidos[$i]->getObjEquipo1();
+                  $arrayPremio[$i]["equipoGanador"]= $equipoGanador ;
+                   
+            } elseif ($cantGolesE1 < $cantGolesE2) {
+                  $equipoGanador = $coleccionPartidos[$i]->getObjEquipo2();
+                  $arrayPremio[$i]["equipoGanador"]= $equipoGanador ;
+            } else {
+                  $equipoGanador = "no hay ganadores";
+            }
+            }
+          
+            return $arrayPremio;
+      }
+
 }
